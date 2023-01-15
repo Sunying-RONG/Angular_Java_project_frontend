@@ -1,1 +1,10 @@
-<p>consultation works!</p>
+<p>Consulter les monuments et les célébrités</p>
+<h4>Département</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choisir un département</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let dep of deps" [value]="dep.nom_dep">
+      {{dep.nom_dep}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

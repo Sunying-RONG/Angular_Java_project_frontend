@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Lieu } from './model/lieu';
+import { Lieu } from '../model/lieu.model';
+import { Departement } from '../model/departement.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,12 @@ export class ConsultationService {
 
   constructor(private http: HttpClient) { }
 
+  getDep(): Observable<Departement[]>{
+    return this.http.get<Departement[]>(`${this.baseUrl}/departements`)
+  }
+
   getLieux(): Observable<Lieu[]>{
     return this.http.get<Lieu[]>(`${this.baseUrl}/lieux`)
   }
+
 }

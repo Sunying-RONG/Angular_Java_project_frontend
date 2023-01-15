@@ -1,0 +1,12 @@
+<p>adminlogin works!</p>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+    <label for="username">Username: </label>
+    <input id="username" type="text" formControlName="username">
+  
+    <label for="password">Password: </label>
+    <input id="password" type="password" formControlName="password">
+    
+    <button type="submit">Submit</button>
+    
+</form>

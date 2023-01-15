@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { ConsultationComponent } from './consultation/consultation.component';
+import { RoleComponent } from './role/role.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'role', pathMatch: 'full' },
+  { path: 'role', component: RoleComponent },
   { path: 'consultation', component: ConsultationComponent },
+  { path: 'adminlogin', component: AdminloginComponent },
 ];
 
 @NgModule({

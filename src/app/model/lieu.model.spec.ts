@@ -1,4 +1,4 @@
-import { Lieu } from './lieu';
+import { Lieu } from './lieu.model';
 
 describe('Lieu', () => {
   it('should create an instance', () => {

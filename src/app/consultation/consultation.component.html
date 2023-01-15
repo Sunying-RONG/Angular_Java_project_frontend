@@ -1,10 +1,41 @@
 <p>Consulter les monuments et les célébrités</p>
+
 <h4>Département</h4>
 <mat-form-field appearance="fill">
   <mat-label>Choisir un département</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let dep of deps" [value]="dep.nom_dep">
+  <mat-select [(value)]="selectedDepId" (selectionChange)="changeDep()">
+    <mat-option *ngFor="let dep of deps" [value]="dep.departement_id">
       {{dep.nom_dep}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h4>Commue</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choisir une commune</mat-label>
+  <mat-select [(value)]="selectedLieuId" (selectionChange)="changeLieu()" [disabled]="!selectedDepId">
+    <mat-option *ngFor="let lieu of lieux" [value]="lieu.lieu_id">
+      {{lieu.nom}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h4>Monument</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choisir un monument</mat-label>
+  <mat-select [(value)]="selectedMonumentId" (selectionChange)="changeMonument()" [disabled]="!selectedLieuId">
+    <mat-option *ngFor="let monument of monuments" [value]="monument.monument_id">
+      {{monument.nom}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<h4>Celebrite</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choisir une celebrite</mat-label>
+  <mat-select [(value)]="selectedCelebriteId" (selectionChange)="changeCelebrite()" [disabled]="!selectedMonumentId">
+    <mat-option *ngFor="let celebrite of celebrites" [value]="celebrite.celebrite_id">
+      {{celebrite.nom}} {{celebrite.prenom}}
     </mat-option>
   </mat-select>
 </mat-form-field>

@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ConsultationService } from '../service/consultation.service';
 import { Lieu } from '../model/lieu.model';
 import { Departement } from '../model/departement.model';
+import { Monument } from '../model/monument.model';
+import { Celebrite } from '../model/celebrite.model';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-consultation',
   templateUrl: './consultation.component.html',
@@ -15,21 +13,53 @@ interface Food {
 export class ConsultationComponent implements OnInit {
   deps!: Departement[];
   lieux!: Lieu[];
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
+  monuments!: Monument[];
+  celebrites!: Celebrite[];
+  selectedDepId: any;
+  selectedLieuId: any;
+  selectedMonumentId: any;
+  selectedCelebriteId: any;
+
   constructor(private consultationService: ConsultationService) {}
 
   ngOnInit(): void {
+    console.log(this.selectedDepId);
       this.consultationService.getDep().subscribe((deps: Departement[]) => {
-        console.log(deps);
         this.deps = deps;
-      })
-      this.consultationService.getLieux().subscribe((data: Lieu[]) => {
-        console.log(data);
-        this.lieux = data;
-      })
+      });
+      this.consultationService.getLieux().subscribe((lieux: Lieu[]) => {
+        this.lieux = lieux;
+      });
+      this.consultationService.getMonuments().subscribe((monuments: Monument[]) => {
+        this.monuments = monuments;
+      });
+      this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
+        this.celebrites = celebrites;
+      });
+  }
+
+  changeDep(): void {
+    console.log(this.selectedDepId);
+    this.consultationService.getLieuByDepId(this.selectedDepId).subscribe((lieuxByDepId: Lieu[]) => {
+      this.lieux = lieuxByDepId;
+    })
+  }
+
+  changeLieu(): void {
+    console.log(this.selectedLieuId);
+    this.consultationService.getMonumentsByLieuId(this.selectedLieuId).subscribe((monumentsByLieuId: Monument[]) => {
+      this.monuments = monumentsByLieuId;
+    })
+  }
+
+  changeMonument(): void {
+    console.log(this.selectedMonumentId);
+    this.consultationService.getCelebritesByMonumentId(this.selectedMonumentId).subscribe((celebritesByMonumentId: Celebrite[]) => {
+      this.celebrites = celebritesByMonumentId;
+    })
+  }
+
+  changeCelebrite(): void {
+    
   }
 }

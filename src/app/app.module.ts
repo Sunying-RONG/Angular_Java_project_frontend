@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { RoleComponent } from './role/role.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

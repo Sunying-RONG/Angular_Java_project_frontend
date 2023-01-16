@@ -19,11 +19,12 @@ export class ConsultationComponent implements OnInit {
   selectedLieuId: any;
   selectedMonumentId: any;
   selectedCelebriteId: any;
-
+  monumentSource: Monument[] = [];
+  monumentColumns: string[] = ['nom', 'proprietaire', 'typeM', 'longitude', 'latitude'];
   constructor(private consultationService: ConsultationService) {}
 
   ngOnInit(): void {
-    console.log(this.selectedDepId);
+    console.log(this.selectedMonumentId);
       this.consultationService.getDep().subscribe((deps: Departement[]) => {
         this.deps = deps;
       });
@@ -56,7 +57,12 @@ export class ConsultationComponent implements OnInit {
     console.log(this.selectedMonumentId);
     this.consultationService.getCelebritesByMonumentId(this.selectedMonumentId).subscribe((celebritesByMonumentId: Celebrite[]) => {
       this.celebrites = celebritesByMonumentId;
-    })
+    });
+    this.consultationService.getMonumentById(this.selectedMonumentId).subscribe((monument: Monument) => {
+      this.monumentSource = [];
+      this.monumentSource.push(monument);
+      console.log(this.monumentSource);
+    });
   }
 
   changeCelebrite(): void {

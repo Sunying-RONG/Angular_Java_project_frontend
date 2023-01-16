@@ -30,6 +30,10 @@ export class ConsultationService {
     return this.http.get<Monument[]>(`${this.baseUrl}/monuments`)
   }
 
+  getMonumentById(monumentId: any): Observable<Monument>{
+    return this.http.get<Monument>(`${this.baseUrl}/monumentById?id=${monumentId}`)
+  }
+
   getMonumentsByLieuId(lieuId: any): Observable<Monument[]>{
     return this.http.get<Monument[]>(`${this.baseUrl}/monumentsOfLieu?id=${lieuId}`)
   }

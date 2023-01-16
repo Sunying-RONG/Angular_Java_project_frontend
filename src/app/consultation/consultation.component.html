@@ -39,3 +39,34 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+
+<table mat-table [dataSource]="monumentSource" class="mat-elevation-z8" *ngIf="selectedMonumentId">
+  <ng-container matColumnDef="nom">
+    <th mat-header-cell *matHeaderCellDef> Nom de monument </th>
+    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="proprietaire">
+    <th mat-header-cell *matHeaderCellDef> Propriétaire </th>
+    <td mat-cell *matCellDef="let element"> {{element.proprietaire}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="typeM">
+    <th mat-header-cell *matHeaderCellDef> Type de monument </th>
+    <td mat-cell *matCellDef="let element"> {{element.typeM}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="longitude">
+    <th mat-header-cell *matHeaderCellDef> Longitude </th>
+    <td mat-cell *matCellDef="let element"> {{element.longitude}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="latitude">
+    <th mat-header-cell *matHeaderCellDef> Latitude </th>
+    <td mat-cell *matCellDef="let element"> {{element.latitude}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="monumentColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: monumentColumns;"></tr>
+</table>
+

@@ -1,8 +1,8 @@
 export interface Monument {
-    monument_id: String;
-    nom: String;
-    proprietaire: String;
-    typeM: String;
-    longitude: Number;
-    latitude: Number;
+    monument_id: string;
+    nom: string;
+    proprietaire: string;
+    typeM: string;
+    longitude: number;
+    latitude: number;
 }

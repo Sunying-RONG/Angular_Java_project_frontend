@@ -1,7 +1,7 @@
 export interface Celebrite {
-    celebrite_id: String;
-    nom: String;
-    prenom: String;
-    nationalite: String;
-    epoque: String;
+    celebrite_id: string;
+    nom: string;
+    prenom: string;
+    nationalite: string;
+    epoque: string;
 }

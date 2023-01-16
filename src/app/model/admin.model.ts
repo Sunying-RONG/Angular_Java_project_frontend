@@ -1,5 +1,5 @@
 export interface Admin {
-    admin_id: String;
-    username: String;
-    password: String
+    admin_id: string;
+    username: string;
+    password: string
 }

@@ -1,5 +1,5 @@
 export interface Departement {
-    departement_id: String;
-    nom_dep: String;
-    reg: String;
+    departement_id: string;
+    nom_dep: string;
+    reg: string;
 }

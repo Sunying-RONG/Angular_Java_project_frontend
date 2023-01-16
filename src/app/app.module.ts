@@ -11,6 +11,7 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { RoleComponent } from './role/role.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { CalculeComponent } from './calcule/calcule.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
     ConsultationComponent,
     AdminloginComponent,
     RoleComponent,
+    CalculeComponent,
   ],
   imports: [
     BrowserModule,

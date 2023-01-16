@@ -18,9 +18,12 @@ export class ConsultationComponent implements OnInit {
   selectedDepId: any;
   selectedLieuId: any;
   selectedMonumentId: any;
-  selectedCelebriteId: any;
+  // selectedCelebriteId: any;
   monumentSource: Monument[] = [];
+  celebritesSource: Celebrite[] = [];
   monumentColumns: string[] = ['nom', 'proprietaire', 'typeM', 'longitude', 'latitude'];
+  celebriteColumns: string[] = ['nom', 'prenom', 'nationalite', 'epoque'];
+
   constructor(private consultationService: ConsultationService) {}
 
   ngOnInit(): void {
@@ -34,9 +37,9 @@ export class ConsultationComponent implements OnInit {
       this.consultationService.getMonuments().subscribe((monuments: Monument[]) => {
         this.monuments = monuments;
       });
-      this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
-        this.celebrites = celebrites;
-      });
+      // this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
+      //   this.celebrites = celebrites;
+      // });
   }
 
   changeDep(): void {
@@ -55,17 +58,18 @@ export class ConsultationComponent implements OnInit {
 
   changeMonument(): void {
     console.log(this.selectedMonumentId);
-    this.consultationService.getCelebritesByMonumentId(this.selectedMonumentId).subscribe((celebritesByMonumentId: Celebrite[]) => {
-      this.celebrites = celebritesByMonumentId;
-    });
+    // this.consultationService.getCelebritesByMonumentId(this.selectedMonumentId).subscribe((celebritesByMonumentId: Celebrite[]) => {
+    //   this.celebrites = celebritesByMonumentId;
+    // });
     this.consultationService.getMonumentById(this.selectedMonumentId).subscribe((monument: Monument) => {
       this.monumentSource = [];
       this.monumentSource.push(monument);
-      console.log(this.monumentSource);
     });
+    this.consultationService.getCelebritesByMonumentId(this.selectedMonumentId).subscribe((celebrites: Celebrite[]) => {
+      this.celebritesSource = celebrites;
+      console.log(this.celebritesSource);
+    })
   }
 
-  changeCelebrite(): void {
-    
-  }
+  // changeCelebrite(): void { }
 }

@@ -30,7 +30,7 @@
   </mat-select>
 </mat-form-field>
 
-<h4>Celebrite</h4>
+<!-- <h4>Celebrite</h4>
 <mat-form-field appearance="fill">
   <mat-label>Choisir une celebrite</mat-label>
   <mat-select [(value)]="selectedCelebriteId" (selectionChange)="changeCelebrite()" [disabled]="!selectedMonumentId">
@@ -38,7 +38,7 @@
       {{celebrite.nom}} {{celebrite.prenom}}
     </mat-option>
   </mat-select>
-</mat-form-field>
+</mat-form-field> -->
 
 <table mat-table [dataSource]="monumentSource" class="mat-elevation-z8" *ngIf="selectedMonumentId">
   <ng-container matColumnDef="nom">
@@ -70,3 +70,27 @@
   <tr mat-row *matRowDef="let row; columns: monumentColumns;"></tr>
 </table>
 
+<table mat-table [dataSource]="celebritesSource" class="mat-elevation-z8" *ngIf="selectedMonumentId && celebritesSource.length>0">
+  <ng-container matColumnDef="nom">
+    <th mat-header-cell *matHeaderCellDef> Nom de célébrité </th>
+    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="prenom">
+    <th mat-header-cell *matHeaderCellDef> Prénom de célébrité </th>
+    <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nationalite">
+    <th mat-header-cell *matHeaderCellDef> Nationalité </th>
+    <td mat-cell *matCellDef="let element"> {{element.nationalite}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="epoque">
+    <th mat-header-cell *matHeaderCellDef> époque </th>
+    <td mat-cell *matCellDef="let element"> {{element.epoque}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="celebriteColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: celebriteColumns;"></tr>
+</table>

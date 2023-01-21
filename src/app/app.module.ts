@@ -9,10 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { RoleComponent } from './role/role.component';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
 import { CalculeComponent } from './calcule/calcule.component';
 import { AdminOperationComponent } from './admin-operation/admin-operation.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AdminOperationComponent } from './admin-operation/admin-operation.compo
     CommonModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,23 @@
 <p>admin-operation works!</p>
+<div>{{username}}</div>
+<button (click)="logout()">Logout</button>
+
+<p>Opérations de modification, suppression et insertion</p>
+
+<button 
+    (click)="addM()">
+    Ajouter un monument
+</button>
+<br>
+<app-consultation #consultation></app-consultation>
+<br>
+<button 
+    (click)="modifyM()" 
+    [disabled]="!this.consultation.selectedMonumentId">
+    Modifier ce monument
+</button>
+<button 
+    (click)="deleteM()"
+    [disabled]="!this.consultation.selectedMonumentId">
+    Supprimer ce monument
+</button>

@@ -38,6 +38,10 @@ export class ConsultationService {
     return this.http.get<Monument[]>(`${this.baseUrl}/monumentsOfLieu?id=${lieuId}`)
   }
 
+  calculeMonumentDistance(lat1: number, lng1: number, lat2: number, lng2: number): Observable<number>{
+    return this.http.get<number>(`${this.baseUrl}/calculeDistance?lat1=${lat1}&lng1=${lng1}&lat2=${lat2}&lng2=${lng2}`)
+  }
+
   getCelebrites(): Observable<Celebrite[]>{
     return this.http.get<Celebrite[]>(`${this.baseUrl}/celebrites`)
   }

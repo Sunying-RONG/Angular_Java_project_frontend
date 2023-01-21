@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Lieu } from '../model/lieu.model';
 import { Admin } from '../model/admin.model';
 
 @Injectable({
@@ -15,4 +14,10 @@ export class AdminService {
   getAdmin(): Observable<Admin[]>{
     return this.http.get<Admin[]>(`${this.baseUrl}/admins`)
   }
+
+  adminLogin(admin:Admin): Observable<any> {
+    const headers = {'content-type': 'application/json'}
+    const body = JSON.stringify(admin)
+    return this.http.post(`${this.baseUrl}/adminLogin`, body, {'headers': headers});
+  } 
 }

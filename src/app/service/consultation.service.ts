@@ -21,6 +21,10 @@ export class ConsultationService {
   getLieux(): Observable<Lieu[]>{
     return this.http.get<Lieu[]>(`${this.baseUrl}/lieux`)
   }
+  
+  getLieuById(lieu_id: string): Observable<Lieu>{
+    return this.http.get<Lieu>(`${this.baseUrl}/lieuById?lieu_id=${lieu_id}`)
+  }
 
   getLieuByDepId(depId: any): Observable<Lieu[]>{
     return this.http.get<Lieu[]>(`${this.baseUrl}/lieuOfDepartement?id=${depId}`)

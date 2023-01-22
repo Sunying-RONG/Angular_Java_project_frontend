@@ -1,5 +1,5 @@
 export interface Celebrite {
-    celebrite_id: string;
+    celebrite_id: number;
     nom: string;
     prenom: string;
     nationalite: string;

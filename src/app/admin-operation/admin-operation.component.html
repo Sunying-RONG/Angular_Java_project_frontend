@@ -4,20 +4,20 @@
 
 <p>Opérations de modification, suppression et insertion</p>
 
-<button 
-    (click)="addM()">
-    Ajouter un monument
-</button>
-<br>
 <app-consultation #consultation></app-consultation>
 <br>
 <button 
+    (click)="addM()"
+    [disabled]="!this.consultation.selectedLieuId">
+    Ajouter un monument et ses célébrités dans ce commune
+</button>
+<button 
     (click)="modifyM()" 
     [disabled]="!this.consultation.selectedMonumentId">
-    Modifier ce monument
+    Modifier ce monument et ses célébrités 
 </button>
 <button 
     (click)="deleteM()"
     [disabled]="!this.consultation.selectedMonumentId">
-    Supprimer ce monument
+    Supprimer ce monument et ses célébrités
 </button>

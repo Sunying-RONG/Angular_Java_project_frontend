@@ -17,7 +17,6 @@ export class AdminService {
 
   adminLogin(admin:Admin): Observable<any> {
     const headers = {'content-type': 'application/json'}
-    const body = JSON.stringify(admin)
-    return this.http.post(`${this.baseUrl}/adminLogin`, body, {'headers': headers});
+    return this.http.post(`${this.baseUrl}/adminLogin`, admin, {'headers': headers});
   } 
 }

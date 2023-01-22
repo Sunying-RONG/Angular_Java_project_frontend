@@ -28,15 +28,15 @@ export class ConsultationComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.selectedMonumentId);
-      this.consultationService.getDep().subscribe((deps: Departement[]) => {
-        this.deps = deps;
-      });
-      this.consultationService.getLieux().subscribe((lieux: Lieu[]) => {
-        this.lieux = lieux;
-      });
-      this.consultationService.getMonuments().subscribe((monuments: Monument[]) => {
-        this.monuments = monuments;
-      });
+    this.consultationService.getDep().subscribe((deps: Departement[]) => {
+      this.deps = deps;
+    });
+    this.consultationService.getLieux().subscribe((lieux: Lieu[]) => {
+      this.lieux = lieux;
+    });
+    this.consultationService.getMonuments().subscribe((monuments: Monument[]) => {
+      this.monuments = monuments;
+    });
       // this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
       //   this.celebrites = celebrites;
       // });
@@ -71,5 +71,4 @@ export class ConsultationComponent implements OnInit {
     })
   }
 
-  // changeCelebrite(): void { }
 }

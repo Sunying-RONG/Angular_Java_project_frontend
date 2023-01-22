@@ -1,0 +1,15 @@
+.parent {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    .example-container {
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+    }
+    .table {
+        width: fit-content;
+    }
+
+    
+}

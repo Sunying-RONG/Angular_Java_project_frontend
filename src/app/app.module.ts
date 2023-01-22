@@ -11,9 +11,12 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { RoleComponent } from './role/role.component';
 import { CalculeComponent } from './calcule/calcule.component';
 import { AdminOperationComponent } from './admin-operation/admin-operation.component';
+import { EditMonumentComponent } from './edit-monument/edit-monument.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RoleComponent,
     CalculeComponent,
     AdminOperationComponent,
+    EditMonumentComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatTableModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

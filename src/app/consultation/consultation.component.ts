@@ -21,8 +21,8 @@ export class ConsultationComponent implements OnInit {
   // selectedCelebriteId: any;
   monumentSource: Monument[] = [];
   celebritesSource: Celebrite[] = [];
-  monumentColumns: string[] = ['nom', 'proprietaire', 'typeM', 'longitude', 'latitude'];
-  celebriteColumns: string[] = ['nom', 'prenom', 'nationalite', 'epoque'];
+  monumentColumns: string[] = ['monument_id', 'nom', 'proprietaire', 'typeM', 'longitude', 'latitude'];
+  celebriteColumns: string[] = ['celebrite_id', 'nom', 'prenom', 'nationalite', 'epoque'];
 
   constructor(private consultationService: ConsultationService) {}
 

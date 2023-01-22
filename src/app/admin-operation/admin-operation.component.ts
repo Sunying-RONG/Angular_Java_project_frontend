@@ -25,7 +25,9 @@ export class AdminOperationComponent {
   }
 
   modifyM() {
-    console.log(this.consultation.selectedMonumentId);
+    this.router.navigate(['/editMonument'], { state: { 
+      lieu_id: this.consultation.selectedLieuId, 
+      monument_id: this.consultation.selectedMonumentId}});
   }
 
 

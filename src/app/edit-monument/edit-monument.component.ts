@@ -23,6 +23,8 @@ export class EditMonumentComponent {
   selection: any;
   celebriteWarning: string = "";
   monumentWarning: string = "";
+  selectedCommune: string = "";
+  selectedMonument: string | undefined;
 
   monumentForm = new FormGroup({
     monument_id: new FormControl(''),
@@ -51,11 +53,15 @@ export class EditMonumentComponent {
       this.dataSource = new MatTableDataSource<Celebrite>(this.ELEMENT_DATA);
       this.selection = new SelectionModel<Celebrite>(true, []);
     });
-    // const navigate = this.router.getCurrentNavigation();
-    // const state = navigate?.extras.state as {
-    //   lieu_id: string
-    // }
-    // console.log(state.lieu_id);
+    const navigate = this.router.getCurrentNavigation();
+    const state = navigate?.extras.state as {
+      lieu_id: string,
+      monument_id?: string
+    }
+    this.selectedCommune = state.lieu_id;
+    this.selectedMonument = state.monument_id;
+    console.log("selectedCommune: ", this.selectedCommune);
+    console.log("selectedMonument: ", this.selectedMonument);
   }
 
   ngOnInit(): void {
@@ -90,19 +96,17 @@ export class EditMonumentComponent {
         longitude: +longitude,
         latitude: +latitude
       }
-      this.editService.createMonument(monument, "34199").subscribe((monument: Monument) => {
+      this.editService.createMonument(monument, this.selectedCommune).subscribe((monument: Monument) => {
           console.log("created: ", monument);
           console.log("monument.monument_id: ", monument.monument_id);
           this.editService.addCelebrite(this.selection.selected, monument.monument_id).subscribe((monumentC: Monument)=>{
-            console.log("monumentC: ", monumentC);
+            console.log("monument with celebrites: ", monumentC);
+            this.router.navigate(['/adminOperation']);
           })
       });
     } else {
       this.monumentWarning = "Veuillez saisir tous les éléments!";
     }
-    
-    
-    
   }
   
   

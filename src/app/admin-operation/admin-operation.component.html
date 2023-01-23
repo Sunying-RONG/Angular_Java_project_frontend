@@ -1,23 +1,25 @@
-<p>admin-operation works!</p>
-<div>{{username}}</div>
-<button (click)="logout()">Logout</button>
-
-<p>Opérations de modification, suppression et insertion</p>
+<div class="user">
+    <div>Username: {{username}}</div>
+    <button class="button-10" (click)="logout()">Logout</button>
+</div>
+<!-- <p>Opérations de modification, suppression et insertion</p> -->
 
 <app-consultation #consultation></app-consultation>
 <br>
-<button 
-    (click)="addM()"
-    [disabled]="!this.consultation.selectedLieuId">
-    Ajouter un monument et ses célébrités dans ce commune
-</button>
-<button 
-    (click)="modifyM()" 
-    [disabled]="!this.consultation.selectedMonumentId">
-    Modifier ce monument et ses célébrités 
-</button>
-<button 
-    (click)="deleteM()"
-    [disabled]="!this.consultation.selectedMonumentId">
-    Supprimer ce monument et ses célébrités
-</button>
+<div class="buttons">
+    <button class="button-55" [ngStyle]="{'cursor': this.consultation.selectedLieuId ? 'pointer' : 'not-allowed' }"
+        (click)="addM()"
+        [disabled]="!this.consultation.selectedLieuId">
+        Ajouter un monument et ses célébrités dans ce commune
+    </button>
+    <button class="button-55" [ngStyle]="{'cursor': this.consultation.selectedMonumentId ? 'pointer' : 'not-allowed' }"
+        (click)="modifyM()" 
+        [disabled]="!this.consultation.selectedMonumentId">
+        Modifier ce monument et ses célébrités 
+    </button>
+    <button class="button-55" [ngStyle]="{'cursor': this.consultation.selectedMonumentId ? 'pointer' : 'not-allowed' }"
+        (click)="deleteM()"
+        [disabled]="!this.consultation.selectedMonumentId">
+        Supprimer ce monument
+    </button>
+</div>

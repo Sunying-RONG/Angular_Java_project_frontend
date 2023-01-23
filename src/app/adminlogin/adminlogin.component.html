@@ -1,13 +1,15 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<div class="login">
+    <form class="form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-    <label for="username">Username: </label>
-    <input id="username" type="text" formControlName="username">
-  
-    <label for="password">Password: </label>
-    <input id="password" type="password" formControlName="password">
+        <label for="username">Username: </label>
+        <input id="username" type="text" formControlName="username">
     
-    <button type="submit">Submit</button>
-    
-</form>
-<div>{{warning}}</div>
-<div>{{error}}</div>
+        <label for="password">Password: </label>
+        <input id="password" type="password" formControlName="password">
+        
+        <button class="button-10" type="submit">Submit</button>
+        
+    </form>
+    <div class="msg" *ngIf="warning">{{warning}}</div>
+    <div class="msg" *ngIf="error">{{error}}</div>
+</div>

@@ -1,32 +1,40 @@
 <app-consultation></app-consultation>
+<div class="consultation">
+  <h2>Calcule distance entre deux monuments</h2>
+  <div class="form">
 
-<p>Calcule distance entre deux monuments</p>
+    <div class="form-element">
+      <h4>Choisir un monument</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Monument</mat-label>
+        <mat-select [formControl]="monumentControl" [(value)]="selectedMonumentAId" (selectionChange)="changeMonument()">
+          <mat-option>-- None --</mat-option>
+          <mat-optgroup *ngFor="let group of monumentGroups" [label]="group.lieu_nom">
+            <mat-option *ngFor="let monument of group.monuments" [value]="monument.monument_id">
+              {{monument.nom}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+    </div>
+      
+    <div class="form-element">
+      <h4>Choisir un autre monument</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Monument</mat-label>
+        <mat-select [formControl]="monumentControl" [(value)]="selectedMonumentBId" (selectionChange)="changeMonument()">
+          <mat-option>-- None --</mat-option>
+          <mat-optgroup *ngFor="let group of monumentGroups" [label]="group.lieu_nom">
+            <mat-option *ngFor="let monument of group.monuments" [value]="monument.monument_id">
+              {{monument.nom}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 
-<h4>Choisir un monument</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Monument</mat-label>
-  <mat-select [formControl]="monumentControl" [(value)]="selectedMonumentAId" (selectionChange)="changeMonument()">
-    <mat-option>-- None --</mat-option>
-    <mat-optgroup *ngFor="let group of monumentGroups" [label]="group.lieu_nom">
-      <mat-option *ngFor="let monument of group.monuments" [value]="monument.monument_id">
-        {{monument.nom}}
-      </mat-option>
-    </mat-optgroup>
-  </mat-select>
-</mat-form-field>
+  <h3>Distance entre les monuments choisis (mètres)</h3>
+  <h3 class="resultat">{{distance}}</h3>
 
-<h4>Choisir un autre monument</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Monument</mat-label>
-  <mat-select [formControl]="monumentControl" [(value)]="selectedMonumentBId" (selectionChange)="changeMonument()">
-    <mat-option>-- None --</mat-option>
-    <mat-optgroup *ngFor="let group of monumentGroups" [label]="group.lieu_nom">
-      <mat-option *ngFor="let monument of group.monuments" [value]="monument.monument_id">
-        {{monument.nom}}
-      </mat-option>
-    </mat-optgroup>
-  </mat-select>
-</mat-form-field>
-
-<h4>Distance entre les monuments choisis (mètres)</h4>
-<div>{{distance}}</div>
+</div>

@@ -1,107 +1,114 @@
-<p>Consulter les monuments et les célébrités</p>
+<div class="consultation">
+  <h2>Consulter les monuments et les célébrités</h2>
+  <div class="form">
+    <div class="form-element">
+      <h4>Département</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Choisir un département</mat-label>
+        <mat-select [(value)]="selectedDepId" (selectionChange)="changeDep()">
+          <mat-option *ngFor="let dep of deps" [value]="dep.departement_id">
+            {{dep.nom_dep}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-element">
+      <h4>Commue</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Choisir une commune</mat-label>
+        <mat-select [(value)]="selectedLieuId" (selectionChange)="changeLieu()" [disabled]="!selectedDepId">
+          <mat-option *ngFor="let lieu of lieux" [value]="lieu.lieu_id">
+            {{lieu.nom}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-element">
+      <h4>Monument</h4>
+      <mat-form-field appearance="fill">
+        <mat-label>Choisir un monument</mat-label>
+        <mat-select [(value)]="selectedMonumentId" (selectionChange)="changeMonument()" [disabled]="!selectedLieuId">
+          <mat-option *ngFor="let monument of monuments" [value]="monument.monument_id">
+            {{monument.nom}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- <h4>Celebrite</h4>
+  <mat-form-field appearance="fill">
+    <mat-label>Choisir une celebrite</mat-label>
+    <mat-select [(value)]="selectedCelebriteId" (selectionChange)="changeCelebrite()" [disabled]="!selectedMonumentId">
+      <mat-option *ngFor="let celebrite of celebrites" [value]="celebrite.celebrite_id">
+        {{celebrite.nom}} {{celebrite.prenom}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
 
-<h4>Département</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Choisir un département</mat-label>
-  <mat-select [(value)]="selectedDepId" (selectionChange)="changeDep()">
-    <mat-option *ngFor="let dep of deps" [value]="dep.departement_id">
-      {{dep.nom_dep}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <table class="table" mat-table [dataSource]="monumentSource" class="mat-elevation-z8" *ngIf="selectedMonumentId">
+    
+    <ng-container matColumnDef="monument_id">
+      <th mat-header-cell *matHeaderCellDef> Monument Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.monument_id}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom de monument </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+    </ng-container>
 
-<h4>Commue</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Choisir une commune</mat-label>
-  <mat-select [(value)]="selectedLieuId" (selectionChange)="changeLieu()" [disabled]="!selectedDepId">
-    <mat-option *ngFor="let lieu of lieux" [value]="lieu.lieu_id">
-      {{lieu.nom}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    <ng-container matColumnDef="proprietaire">
+      <th mat-header-cell *matHeaderCellDef> Propriétaire </th>
+      <td mat-cell *matCellDef="let element"> {{element.proprietaire}} </td>
+    </ng-container>
 
-<h4>Monument</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Choisir un monument</mat-label>
-  <mat-select [(value)]="selectedMonumentId" (selectionChange)="changeMonument()" [disabled]="!selectedLieuId">
-    <mat-option *ngFor="let monument of monuments" [value]="monument.monument_id">
-      {{monument.nom}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+    <ng-container matColumnDef="typeM">
+      <th mat-header-cell *matHeaderCellDef> Type de monument </th>
+      <td mat-cell *matCellDef="let element"> {{element.typeM}} </td>
+    </ng-container>
 
-<!-- <h4>Celebrite</h4>
-<mat-form-field appearance="fill">
-  <mat-label>Choisir une celebrite</mat-label>
-  <mat-select [(value)]="selectedCelebriteId" (selectionChange)="changeCelebrite()" [disabled]="!selectedMonumentId">
-    <mat-option *ngFor="let celebrite of celebrites" [value]="celebrite.celebrite_id">
-      {{celebrite.nom}} {{celebrite.prenom}}
-    </mat-option>
-  </mat-select>
-</mat-form-field> -->
+    <ng-container matColumnDef="longitude">
+      <th mat-header-cell *matHeaderCellDef> Longitude </th>
+      <td mat-cell *matCellDef="let element"> {{element.longitude}} </td>
+    </ng-container>
 
-<table mat-table [dataSource]="monumentSource" class="mat-elevation-z8" *ngIf="selectedMonumentId">
-  
-  <ng-container matColumnDef="monument_id">
-    <th mat-header-cell *matHeaderCellDef> Monument Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.monument_id}} </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="nom">
-    <th mat-header-cell *matHeaderCellDef> Nom de monument </th>
-    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-  </ng-container>
+    <ng-container matColumnDef="latitude">
+      <th mat-header-cell *matHeaderCellDef> Latitude </th>
+      <td mat-cell *matCellDef="let element"> {{element.latitude}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="proprietaire">
-    <th mat-header-cell *matHeaderCellDef> Propriétaire </th>
-    <td mat-cell *matCellDef="let element"> {{element.proprietaire}} </td>
-  </ng-container>
+    <tr mat-header-row *matHeaderRowDef="monumentColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: monumentColumns;"></tr>
+  </table>
+  <br>
+  <table class="table" mat-table [dataSource]="celebritesSource" class="mat-elevation-z8" *ngIf="selectedMonumentId && celebritesSource.length>0">
+    <ng-container matColumnDef="celebrite_id">
+      <th mat-header-cell *matHeaderCellDef> Célébrité Id</th>
+      <td mat-cell *matCellDef="let element"> {{element.celebrite_id}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="typeM">
-    <th mat-header-cell *matHeaderCellDef> Type de monument </th>
-    <td mat-cell *matCellDef="let element"> {{element.typeM}} </td>
-  </ng-container>
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom de célébrité </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="longitude">
-    <th mat-header-cell *matHeaderCellDef> Longitude </th>
-    <td mat-cell *matCellDef="let element"> {{element.longitude}} </td>
-  </ng-container>
+    <ng-container matColumnDef="prenom">
+      <th mat-header-cell *matHeaderCellDef> Prénom de célébrité </th>
+      <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="latitude">
-    <th mat-header-cell *matHeaderCellDef> Latitude </th>
-    <td mat-cell *matCellDef="let element"> {{element.latitude}} </td>
-  </ng-container>
+    <ng-container matColumnDef="nationalite">
+      <th mat-header-cell *matHeaderCellDef> Nationalité </th>
+      <td mat-cell *matCellDef="let element"> {{element.nationalite}} </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="monumentColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: monumentColumns;"></tr>
-</table>
+    <ng-container matColumnDef="epoque">
+      <th mat-header-cell *matHeaderCellDef> époque </th>
+      <td mat-cell *matCellDef="let element"> {{element.epoque}} </td>
+    </ng-container>
 
-<table mat-table [dataSource]="celebritesSource" class="mat-elevation-z8" *ngIf="selectedMonumentId && celebritesSource.length>0">
-  <ng-container matColumnDef="celebrite_id">
-    <th mat-header-cell *matHeaderCellDef> Célébrité Id</th>
-    <td mat-cell *matCellDef="let element"> {{element.celebrite_id}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="nom">
-    <th mat-header-cell *matHeaderCellDef> Nom de célébrité </th>
-    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="prenom">
-    <th mat-header-cell *matHeaderCellDef> Prénom de célébrité </th>
-    <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="nationalite">
-    <th mat-header-cell *matHeaderCellDef> Nationalité </th>
-    <td mat-cell *matCellDef="let element"> {{element.nationalite}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="epoque">
-    <th mat-header-cell *matHeaderCellDef> époque </th>
-    <td mat-cell *matCellDef="let element"> {{element.epoque}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="celebriteColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: celebriteColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="celebriteColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: celebriteColumns;"></tr>
+  </table>
+  <br>
+</div>

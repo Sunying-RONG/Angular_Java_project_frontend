@@ -9,8 +9,6 @@ import { Monument } from '../model/monument.model';
 import { ConsultationService } from '../service/consultation.service';
 import { EditService } from '../service/edit.service';
 
-
-
 @Component({
   selector: 'app-edit-monument',
   templateUrl: './edit-monument.component.html',
@@ -25,23 +23,8 @@ export class EditMonumentComponent implements OnInit {
   monumentWarning: string = "";
   selectedCommune: string = "";
   selectedMonument: string | undefined;
-
-  monumentForm = new FormGroup({
-    monument_id: new FormControl(''),
-    nom: new FormControl(''),
-    proprietaire: new FormControl(''),
-    typeM: new FormControl(''),
-    longitude: new FormControl(''),
-    latitude: new FormControl(''),
-  });
-
-  celebriteForm = new FormGroup({
-    celebrite_id: new FormControl(''),
-    nom: new FormControl(''),
-    prenom: new FormControl(''),
-    nationalite: new FormControl(''),
-    epoque: new FormControl('')
-  })
+  monumentForm: FormGroup;
+  celebriteForm: FormGroup;
   
   constructor(private editService: EditService , 
               private consultationService: ConsultationService, 
@@ -55,9 +38,27 @@ export class EditMonumentComponent implements OnInit {
     this.selectedMonument = state.monument_id;
     console.log("selectedCommune: ", this.selectedCommune);
     console.log("selectedMonument: ", this.selectedMonument);
-  }
 
+    this.monumentForm = new FormGroup({
+      monument_id: new FormControl({value: '', disabled: this.selectedMonument != undefined}),
+      nom: new FormControl(''),
+      proprietaire: new FormControl(''),
+      typeM: new FormControl(''),
+      longitude: new FormControl(''),
+      latitude: new FormControl(''),
+    });
+  
+    this.celebriteForm = new FormGroup({
+      celebrite_id: new FormControl(''),
+      nom: new FormControl(''),
+      prenom: new FormControl(''),
+      nationalite: new FormControl(''),
+      epoque: new FormControl('')
+    })
+  }
+  
   ngOnInit(): void {
+    
     let defaultSelected: Celebrite[] = [];
 
     this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
@@ -81,7 +82,7 @@ export class EditMonumentComponent implements OnInit {
           }
           this.monumentForm.setValue({
             monument_id: m.monument_id,
-            nom: m.monument_id,
+            nom: m.nom,
             proprietaire: m.proprietaire,
             typeM: m.typeM,
             longitude: m.longitude.toString(),
@@ -92,9 +93,6 @@ export class EditMonumentComponent implements OnInit {
         this.selection = new SelectionModel<Celebrite>(true, []);
       }
     });
-    
-
-    
   }
 
   createMonument() {
@@ -125,6 +123,7 @@ export class EditMonumentComponent implements OnInit {
           if (this.selection?.selected && this.selection?.selected.length>0) {
             this.editService.addCelebrite(this.selection.selected, monument.monument_id).subscribe((monumentC: Monument)=>{
               console.log("monument with celebrites: ", monumentC);
+              confirm("Monument créé avec succès !")
               this.router.navigate(['/adminOperation']);
             })
           }
@@ -133,8 +132,49 @@ export class EditMonumentComponent implements OnInit {
       this.monumentWarning = "Veuillez saisir tous les éléments!";
     }
   }
-  
-  
+
+  updateMonument() {
+    this.monumentWarning = "";
+
+    const monument_id = this.selectedMonument;
+    const nom = this.monumentForm.value.nom;
+    const proprietaire = this.monumentForm.value.proprietaire;
+    const typeM = this.monumentForm.value.typeM;
+    const longitude = this.monumentForm.value.longitude;
+    const latitude = this.monumentForm.value.latitude;
+
+    console.log(this.selection?.selected);
+    let monument: Monument;
+    console.log("monument_id", monument_id);
+    console.log("nom", nom);
+    console.log("proprietaire", proprietaire);
+    console.log("typeM", typeM);
+    console.log("longitude", longitude);
+    console.log("latitude", latitude);
+    if (monument_id && nom && proprietaire && typeM && longitude && latitude) {
+      console.log(monument_id, nom, proprietaire, typeM, longitude, latitude);
+      monument = {
+        monument_id: monument_id,
+        nom: nom,
+        proprietaire: proprietaire,
+        typeM: typeM,
+        longitude: +longitude,
+        latitude: +latitude
+      }
+      this.editService.updateMonument(monument, this.selectedCommune).subscribe((monument: Monument) => {
+          console.log("updated: ", monument);
+          if (this.selection?.selected && this.selection?.selected.length>0) {
+            this.editService.addCelebrite(this.selection.selected, monument.monument_id).subscribe((monumentC: Monument)=>{
+              console.log("monument with celebrites: ", monumentC);
+              confirm("Monument modifié avec succès !");
+              this.router.navigate(['/adminOperation']);
+            })
+          }
+      });
+    } else {
+      this.monumentWarning = "Veuillez saisir tous les éléments!";
+    }
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -162,9 +202,8 @@ export class EditMonumentComponent implements OnInit {
     return `${this.selection?.isSelected(row) ? 'deselect' : 'select'} row ${row.celebrite_id}`;
   }
 
-
-
   createCelebrite() {
+    let defaultSelected: Celebrite[] = [];
     this.celebriteWarning = "";
     const celebrite_id = this.celebriteForm.value.celebrite_id;
     const nom = this.celebriteForm.value.nom;
@@ -180,12 +219,20 @@ export class EditMonumentComponent implements OnInit {
         epoque: epoque
       }
       this.editService.createCelebrite(celebrite).subscribe(res =>{
-        console.log(res);
         this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
           console.log(celebrites);
           this.ELEMENT_DATA = celebrites;
+          if (this.selection) {
+            for (let i = 0; i < this.selection.selected.length; i++) {
+              for (let j = 0; j < this.ELEMENT_DATA.length; j++) {
+                if (this.selection.selected[i].celebrite_id == this.ELEMENT_DATA[j].celebrite_id) {
+                  defaultSelected.push(this.ELEMENT_DATA[j]);
+                }
+              }
+            }
+          }
+          this.selection = new SelectionModel<Celebrite>(true, defaultSelected);
           this.dataSource = new MatTableDataSource<Celebrite>(this.ELEMENT_DATA);
-          this.selection = new SelectionModel<Celebrite>(true, []);
         });
       });
     } else {

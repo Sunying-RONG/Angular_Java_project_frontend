@@ -1,6 +1,7 @@
-<p>Commune {{selectedCommune}}</p>
+<h3>Commune: {{selectedCommune}}</h3>
 <div class="parent">
-    <form class="example-container" [formGroup]="monumentForm"  (ngSubmit)="createMonument()">
+    <form class="example-container" [formGroup]="monumentForm" 
+        (ngSubmit)="selectedMonument == undefined ? createMonument() : updateMonument()">
         <p>Créer un nouveau monument</p>
         <mat-form-field hintLabel="12 characters" appearance="fill">
             <mat-label>Monumment Id</mat-label>
@@ -32,8 +33,8 @@
             <mat-label>Latitude</mat-label>
             <input formControlName="latitude" matInput #input placeholder="Ex. 43.5857">
         </mat-form-field>
-
-        <button type="submit">Créer monument</button>
+        <button class="button-10" *ngIf="selectedMonument == undefined" type="submit">Créer monument</button>
+        <button class="button-10" *ngIf="selectedMonument != undefined" type="submit">Modifier monument</button>
         <br>
         <div>{{monumentWarning}}</div>
     </form>
@@ -92,11 +93,11 @@
     </div>
 
     <form class="example-container" [formGroup]="celebriteForm"  (ngSubmit)="createCelebrite()">
-        <p>Créer une nouvelle célébrité pour l'attacher plus tard</p>
+        <p>Créer une nouvelle célébrité pour l'attacher</p>
         
         <mat-form-field hintLabel="" appearance="fill">
             <mat-label>Célébrité Id</mat-label>
-            <input type="number" formControlName="celebrite_id" matInput #input placeholder="Ex. Moulin">
+            <input type="number" formControlName="celebrite_id" matInput #input placeholder="Ex. 1">
         </mat-form-field>
 
         <mat-form-field hintLabel="" appearance="fill">
@@ -119,7 +120,7 @@
             <input formControlName="epoque" matInput #input placeholder="Ex. XX">
         </mat-form-field>
 
-        <button type="submit">Créer célébrité</button>
+        <button class="button-10"  type="submit">Créer célébrité</button>
         <br>
         <div>{{celebriteWarning}}</div>
     </form>

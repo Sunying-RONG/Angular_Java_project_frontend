@@ -16,8 +16,12 @@ export class EditService {
     return this.http.post(`${this.baseUrl}/createMonument/${lieu_id}`, monument, {'headers': this.headers});
   }
 
+  updateMonument(monument: Monument, lieu_id: string): Observable<any>{
+    return this.http.put(`${this.baseUrl}/updateMonument/${lieu_id}`, monument, {'headers': this.headers});
+  }
+
   addCelebrite(celebrites: Celebrite[], monument_id: string): Observable<any>{
-    return this.http.post(`${this.baseUrl}/addCelebrite/${monument_id}`, celebrites, {'headers': this.headers});
+    return this.http.put(`${this.baseUrl}/addCelebrite/${monument_id}`, celebrites, {'headers': this.headers});
   }
 
   createCelebrite(celebrite: Celebrite): Observable<any>{

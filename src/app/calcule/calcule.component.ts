@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { combineLatest, map } from 'rxjs';
 import { Lieu } from '../model/lieu.model';
@@ -12,7 +12,7 @@ import { ConsultationService } from '../service/consultation.service';
   styleUrls: ['./calcule.component.scss']
 })
 
-export class CalculeComponent {
+export class CalculeComponent implements OnInit{
   lieux!: Lieu[];
   selectedMonumentAId: any;
   selectedMonumentBId: any;

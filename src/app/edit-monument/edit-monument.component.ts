@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -16,11 +16,11 @@ import { EditService } from '../service/edit.service';
   templateUrl: './edit-monument.component.html',
   styleUrls: ['./edit-monument.component.scss']
 })
-export class EditMonumentComponent {
+export class EditMonumentComponent implements OnInit {
   ELEMENT_DATA: Celebrite[] = [];
   displayedColumns: string[] = [];
   dataSource: any;
-  selection: any;
+  selection: SelectionModel<Celebrite> | undefined;
   celebriteWarning: string = "";
   monumentWarning: string = "";
   selectedCommune: string = "";
@@ -46,13 +46,6 @@ export class EditMonumentComponent {
   constructor(private editService: EditService , 
               private consultationService: ConsultationService, 
               private router: Router) {
-    this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
-      console.log(celebrites);
-      this.ELEMENT_DATA = celebrites;
-      this.displayedColumns = ['select', 'celebrite_id', 'nom', 'prenom', 'nationalite', 'epoque'];
-      this.dataSource = new MatTableDataSource<Celebrite>(this.ELEMENT_DATA);
-      this.selection = new SelectionModel<Celebrite>(true, []);
-    });
     const navigate = this.router.getCurrentNavigation();
     const state = navigate?.extras.state as {
       lieu_id: string,
@@ -65,18 +58,48 @@ export class EditMonumentComponent {
   }
 
   ngOnInit(): void {
-    // this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
-    //   console.log(celebrites);
-    //   this.ELEMENT_DATA = celebrites;
-    //   this.displayedColumns = ['celebrite_id', 'nom', 'prenom', 'nationalite', 'epoque'];
-    //   this.dataSource = new MatTableDataSource<Celebrite>(this.ELEMENT_DATA);
-    //   this.selection = new SelectionModel<Celebrite>(true, []);
-    // });
+    let defaultSelected: Celebrite[] = [];
+
+    this.consultationService.getCelebrites().subscribe((celebrites: Celebrite[]) => {
+      this.ELEMENT_DATA = celebrites;
+      this.displayedColumns = ['select', 'celebrite_id', 'nom', 'prenom', 'nationalite', 'epoque'];
+      this.dataSource = new MatTableDataSource<Celebrite>(this.ELEMENT_DATA);
+
+      console.log("selectedMonument ngOnInit: ", this.selectedMonument);
+      if (this.selectedMonument) {
+        this.consultationService.getMonumentById(this.selectedMonument).subscribe((m: Monument) => {
+          console.log(m.celebrites)
+          if (m.celebrites) {
+            for (let i = 0; i < m.celebrites.length; i++) {
+              for (let j = 0; j < this.ELEMENT_DATA.length; j++) {
+                if (m.celebrites[i].celebrite_id == this.ELEMENT_DATA[j].celebrite_id) {
+                  defaultSelected.push(this.ELEMENT_DATA[j]);
+                }
+              }
+            }
+            this.selection = new SelectionModel<Celebrite>(true, defaultSelected);
+          }
+          this.monumentForm.setValue({
+            monument_id: m.monument_id,
+            nom: m.monument_id,
+            proprietaire: m.proprietaire,
+            typeM: m.typeM,
+            longitude: m.longitude.toString(),
+            latitude: m.latitude.toString()
+          })
+        });
+      } else {
+        this.selection = new SelectionModel<Celebrite>(true, []);
+      }
+    });
+    
+
+    
   }
 
   createMonument() {
     this.monumentWarning = "";
-    console.log(this.selection.selected);
+    
     const monument_id = this.monumentForm.value.monument_id;
     const nom = this.monumentForm.value.nom;
     const proprietaire = this.monumentForm.value.proprietaire;
@@ -84,7 +107,7 @@ export class EditMonumentComponent {
     const longitude = this.monumentForm.value.longitude;
     const latitude = this.monumentForm.value.latitude;
 
-    console.log(this.selection.selected);
+    console.log(this.selection?.selected);
     let monument: Monument;
     if (monument_id && nom && proprietaire && typeM && longitude && latitude) {
       console.log(monument_id, nom, proprietaire, typeM, longitude, latitude);
@@ -99,10 +122,12 @@ export class EditMonumentComponent {
       this.editService.createMonument(monument, this.selectedCommune).subscribe((monument: Monument) => {
           console.log("created: ", monument);
           console.log("monument.monument_id: ", monument.monument_id);
-          this.editService.addCelebrite(this.selection.selected, monument.monument_id).subscribe((monumentC: Monument)=>{
-            console.log("monument with celebrites: ", monumentC);
-            this.router.navigate(['/adminOperation']);
-          })
+          if (this.selection?.selected && this.selection?.selected.length>0) {
+            this.editService.addCelebrite(this.selection.selected, monument.monument_id).subscribe((monumentC: Monument)=>{
+              console.log("monument with celebrites: ", monumentC);
+              this.router.navigate(['/adminOperation']);
+            })
+          }
       });
     } else {
       this.monumentWarning = "Veuillez saisir tous les éléments!";
@@ -113,7 +138,7 @@ export class EditMonumentComponent {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
+    const numSelected = this.selection?.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
@@ -121,11 +146,11 @@ export class EditMonumentComponent {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
-      this.selection.clear();
+      this.selection?.clear();
       return;
     }
 
-    this.selection.select(...this.dataSource.data);
+    this.selection?.select(...this.dataSource.data);
   }
 
   /** The label for the checkbox on the passed row */
@@ -134,7 +159,7 @@ export class EditMonumentComponent {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.celebrite_id}`;
+    return `${this.selection?.isSelected(row) ? 'deselect' : 'select'} row ${row.celebrite_id}`;
   }
 
 

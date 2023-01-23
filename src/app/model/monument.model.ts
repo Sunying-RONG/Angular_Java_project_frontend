@@ -1,3 +1,5 @@
+import { Celebrite } from "./celebrite.model";
+
 export interface Monument {
     monument_id: string;
     nom: string;
@@ -5,4 +7,5 @@ export interface Monument {
     typeM: string;
     longitude: number;
     latitude: number;
+    celebrites?: Celebrite[];
 }

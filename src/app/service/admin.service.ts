@@ -7,7 +7,8 @@ import { Admin } from '../model/admin.model';
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = "http://localhost:8080/api";
+  // private baseUrl = "http://localhost:8080/api";
+  private baseUrl = "https://java-avance-backend.agreeablebush-b953dea1.eastus.azurecontainerapps.io/api";
 
   constructor(private http: HttpClient) { }
 

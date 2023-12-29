@@ -1,6 +1,6 @@
 FROM node:alpine 
-WORKDIR /front-app
-RUN npm install -g @angular/cli
+WORKDIR /app
+RUN npm install -g @angular/cli@15
 COPY package*.json ./
 RUN npm ci 
 COPY . .

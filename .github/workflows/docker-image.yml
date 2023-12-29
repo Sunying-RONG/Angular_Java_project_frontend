@@ -34,4 +34,4 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest,${{ secrets.AZURE_AC_NAME }}.azurecr.io/monumentbackend:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest,${{ secrets.AZURE_AC_NAME }}.azurecr.io/monumentfrontend:latest

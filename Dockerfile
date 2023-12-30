@@ -1,8 +1,10 @@
-FROM node:16-alpine
+# Stage 1
+FROM node:16-alpine as node
 WORKDIR /app
-RUN npm install -g @angular/cli@15
-COPY package*.json ./
-RUN npm ci
 COPY . .
-EXPOSE 4200
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+RUN npm install
+RUN npm run build
+
+# Stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/projet-java-avance-angular /usr/share/nginx/html

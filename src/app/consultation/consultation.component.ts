@@ -46,6 +46,7 @@ export class ConsultationComponent implements OnInit {
     console.log(this.selectedDepId);
     this.consultationService.getLieuByDepId(this.selectedDepId).subscribe((lieuxByDepId: Lieu[]) => {
       this.lieux = lieuxByDepId;
+      this.selectedLieuId = null;
     })
   }
 
@@ -53,6 +54,7 @@ export class ConsultationComponent implements OnInit {
     console.log(this.selectedLieuId);
     this.consultationService.getMonumentsByLieuId(this.selectedLieuId).subscribe((monumentsByLieuId: Monument[]) => {
       this.monuments = monumentsByLieuId;
+      this.selectedMonumentId = null;
     })
   }
 

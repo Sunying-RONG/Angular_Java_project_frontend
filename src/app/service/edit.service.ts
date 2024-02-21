@@ -8,8 +8,8 @@ import { Monument } from '../model/monument.model';
   providedIn: 'root'
 })
 export class EditService {
-  // private baseUrl = "http://localhost:8080/api";
-  private baseUrl = "https://java-avance-backend.agreeablebush-b953dea1.eastus.azurecontainerapps.io/api";
+  private baseUrl = "http://localhost:8080/api";
+  // private baseUrl = "https://java-avance-backend.agreeablebush-b953dea1.eastus.azurecontainerapps.io/api";
 
   private headers = {'content-type': 'application/json'}
   constructor(private http: HttpClient) { }

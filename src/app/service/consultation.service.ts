@@ -10,8 +10,7 @@ import { Celebrite } from '../model/celebrite.model';
   providedIn: 'root'
 })
 export class ConsultationService {
-  // private baseUrl = "http://localhost:8080/api";
-  private baseUrl = "https://java-avance-backend.agreeablebush-b953dea1.eastus.azurecontainerapps.io/api";
+  private baseUrl = "http://localhost:8080/api";
 
   constructor(private http: HttpClient) { }
 

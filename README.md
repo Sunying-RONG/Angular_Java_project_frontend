@@ -1,6 +1,6 @@
 # ProjetJavaAvanceAngular
 
-This project is the frontend part, please also check the [project for backend](https://github.com/Sunying-RONG/Angular_Java_project_backend). 
+This project is the frontend part, please also check the [Java project for backend](https://github.com/Sunying-RONG/Angular_Java_project_backend). 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
 
